@@ -130,67 +130,65 @@ describe("Given I am connected as an employee", () => {
 // hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 
 
+  // test intégration avec POST
+  describe("When I am on NewBill Page, I fill the form and I submit", () => {
+    test("Then the bill is added to API POST", async () => {
+      const html = NewBillUI()
+      document.body.innerHTML = html
 
-describe("When I am on NewBill Page, I fill the form and I submit", () => {
-  test("Then the bill is added to API", async () => {
-    const html = NewBillUI()
-    document.body.innerHTML = html
+      const onNavigate = pathname => { document.body.innerHTML = ROUTES({ pathname }) }
+      Object.defineProperty(window, "localStorage", { value: localStorageMock })
+      const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage: window.localStorage })
 
-    const onNavigate = pathname => { document.body.innerHTML = ROUTES({ pathname }) }
-    Object.defineProperty(window, "localStorage", { value: localStorageMock })
-    const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage: window.localStorage })
+      const bill = {
+        email: "employee@test.tld",
+        type: "Hôtel et logement",
+        name: "Hôtel de la gare",
+        amount: 200,
+        date: "2023-09-21",
+        vat: "20",
+        pct: 5,
+        commentary: "",
+        fileUrl: "testBill.png",
+        fileName: "testBill",
+        status: 'pending'
+      };
 
+      const typeField = screen.getByTestId("expense-type")
+      fireEvent.change(typeField, { target: { value: bill.type } })
+      expect(typeField.value).toBe(bill.type)
+      const nameField = screen.getByTestId("expense-name")
+      fireEvent.change(nameField, { target: { value: bill.name } })
+      expect(nameField.value).toBe(bill.name)
+      const dateField = screen.getByTestId("datepicker")
+      fireEvent.change(dateField, { target: { value: bill.date } })
+      expect(dateField.value).toBe(bill.date)
+      const amountField = screen.getByTestId("amount")
+      fireEvent.change(amountField, { target: { value: bill.amount } })
+      expect(parseInt(amountField.value)).toBe(parseInt(bill.amount))
+      const vatField = screen.getByTestId("vat")
+      fireEvent.change(vatField, { target: { value: bill.vat } })
+      expect(parseInt(vatField.value)).toBe(parseInt(bill.vat))
+      const pctField = screen.getByTestId("pct")
+      fireEvent.change(pctField, { target: { value: bill.pct } })
+      expect(parseInt(pctField.value)).toBe(parseInt(bill.pct))
+      const commentaryField = screen.getByTestId("commentary")
+      fireEvent.change(commentaryField, { target: { value: bill.commentary } })
+      expect(commentaryField.value).toBe(bill.commentary)
 
-    const bill = {
-      email: "employee@test.tld",
-      type: "Hôtel et logement",
-      name: "Hôtel de la gare",
-      amount: 200,
-      date: "2023-09-21",
-      vat: "20",
-      pct: 5,
-      commentary: "",
-      fileUrl: "testBill.png",
-      fileName: "testBill",
-      status: 'pending'
-    };
+      const newBillForm = screen.getByTestId("form-new-bill")
+      
+      const handleChangeFile = jest.fn(newBill.handleChangeFile)
+      newBillForm.addEventListener("change", handleChangeFile)
+      const fileField = screen.getByTestId("file")
+      fireEvent.change(fileField, { target: { files: [ new File([bill.fileName], bill.fileUrl, { type: "image/png" }) ] } });
+      expect(fileField.files[0].name).toBe(bill.fileUrl) 
+      expect(handleChangeFile).toHaveBeenCalled()
 
-    const typeField = screen.getByTestId("expense-type")
-    fireEvent.change(typeField, { target: { value: bill.type } })
-    expect(typeField.value).toBe(bill.type)
-    const nameField = screen.getByTestId("expense-name")
-    fireEvent.change(nameField, { target: { value: bill.name } })
-    expect(nameField.value).toBe(bill.name)
-    const dateField = screen.getByTestId("datepicker")
-    fireEvent.change(dateField, { target: { value: bill.date } })
-    expect(dateField.value).toBe(bill.date)
-    const amountField = screen.getByTestId("amount")
-    fireEvent.change(amountField, { target: { value: bill.amount } })
-    expect(parseInt(amountField.value)).toBe(parseInt(bill.amount))
-    const vatField = screen.getByTestId("vat")
-    fireEvent.change(vatField, { target: { value: bill.vat } })
-    expect(parseInt(vatField.value)).toBe(parseInt(bill.vat))
-    const pctField = screen.getByTestId("pct")
-    fireEvent.change(pctField, { target: { value: bill.pct } })
-    expect(parseInt(pctField.value)).toBe(parseInt(bill.pct))
-    const commentaryField = screen.getByTestId("commentary")
-    fireEvent.change(commentaryField, { target: { value: bill.commentary } })
-    expect(commentaryField.value).toBe(bill.commentary)
-
-    const newBillForm = screen.getByTestId("form-new-bill")
-    
-    const handleChangeFile = jest.fn(newBill.handleChangeFile)
-    newBillForm.addEventListener("change", handleChangeFile)
-    const fileField = screen.getByTestId("file")
-    fireEvent.change(fileField, { target: { files: [ new File([bill.fileName], bill.fileUrl, { type: "image/png" }) ] } });
-    expect(fileField.files[0].name).toBe(bill.fileUrl) 
-    expect(handleChangeFile).toHaveBeenCalled()
-
-    const handleSubmit = jest.fn(newBill.handleSubmit)
-    newBillForm.addEventListener("submit", handleSubmit)
-    fireEvent.submit(newBillForm)
-    expect(handleSubmit).toHaveBeenCalled()
+      const handleSubmit = jest.fn(newBill.handleSubmit)
+      newBillForm.addEventListener("submit", handleSubmit)
+      fireEvent.submit(newBillForm)
+      expect(handleSubmit).toHaveBeenCalled()
+    })
   })
-})
-
 })
