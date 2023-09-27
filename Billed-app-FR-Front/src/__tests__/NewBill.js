@@ -35,7 +35,7 @@ describe("Given I am connected as an employee", () => {
 
 // VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 
-   test("Then ...", () => {
+   test("Then I click for a new bill, should a page newBill appear and handleSubmit be called", () => {
       const html = NewBillUI()
       document.body.innerHTML = html
       const onNavigate = (pathname) => {

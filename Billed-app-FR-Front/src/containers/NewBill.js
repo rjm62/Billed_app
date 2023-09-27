@@ -23,7 +23,6 @@ export default class NewBill {
     var file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     // une condition si dessous pour tester si le format du fichier est bien du type jpg - jpeg - png
     if(file.type === "image/png" || file.type ==="image/jpg" || file.type === "image/jpeg") { 
-      console.log("j'y suis")
       const filePath = e.target.value.split(/\\/g)
       const fileName = filePath[filePath.length-1]
       const formData = new FormData()
