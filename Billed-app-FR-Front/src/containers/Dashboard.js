@@ -145,8 +145,12 @@ export default class {
       this.counter ++
     }
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).off("click") //supprime le click précédent
+      //ci dessous suppression du gestionnaire de click précédent
+      $(`#open-bill${bill.id}`).off("click") 
+      // et j'en crée un nouveau
       $(`#open-bill${bill.id}`).on("click", e => this.handleEditTicket(e, bill, bills))
+      //  ancienne expression fautive :
+      //$(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
    
     return bills
