@@ -87,47 +87,6 @@ describe("Given I am connected as an employee", () => {
       expect(handleSubmit).toBeCalled()
       expect(form).toBeTruthy()
     });
-  
-// hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-
-// describe ("When I am on NewBill form I add File (type'jpg')", () => {
-//   test("Then should be accept", async () => {
-
-//     Object.defineProperty(window, "localStorage", { value: localStorageMock });
-//     window.localStorage.setItem(
-//       "user",
-//       JSON.stringify({
-//         type: "Employee",
-//       })
-//     );
-//     const root = document.createElement("div");
-//     root.setAttribute("id", "root");
-//     document.body.append(root);
-//     router();
-  
-//     const newBillTest = new NewBill({
-//       document, onNavigate, store: mockStore, localStorage: window.localStorage
-//     });
-
-//     const handleChangeFile = jest.fn(newBillTest.handleChangeFile)
-//     const inputFile = screen.getByTestId("file")
-//     const toutou = document.getElementsByClassName("toutou")
-//     inputFile.addEventListener("change", handleChangeFile)
-//     fireEvent.change(inputFile, {
-//       target: {
-//         files: [
-//           new File(["document.jpg"], "document.jpg", { type: "document/jpg" })
-//         ]
-//       }
-//     })
-//     console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
-// console.log(inputFile.files[0])
-//     expect(handleChangeFile).toHaveBeenCalled()
-//     expect(inputFile.files[0].type).toBe("document/jpg");
-   
-//   });
-// })
-// hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 
 
   // test intégration avec POST
